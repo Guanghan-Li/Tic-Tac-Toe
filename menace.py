@@ -18,7 +18,7 @@ class Menace:
   
   def removeMove(self):
     for hash, move in self.made_moves.items():
-      if len(self.made_moves[hash]) > 1:
+      if len(self.made_moves[hash]) > 2:
         self.matchboxes[hash].remove(move)
 
   def learn(self, result):
@@ -30,7 +30,7 @@ class Menace:
       self.removeMove()
     
   def isKnown(self, board):
-    return board.hash() in self.matchboxes.keys()
+    return board.hash() in self.matchboxes
 
   def readBoard(self, board):
     if not self.isKnown(board):

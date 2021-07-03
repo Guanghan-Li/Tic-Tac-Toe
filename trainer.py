@@ -23,19 +23,20 @@ menaceX.loadState(dbX)
 current_menace = menaceX
 other_menace = menaceO
 ties = 0
+max_ties = 0
 while ties < 300:
   x_wins = 0
   o_wins = 0
   ties = 0
   for i in range(300):
-    menaceO = Menace('O')
-    menaceX = Menace('X')
-    menaceO.loadState(dbO)
-    menaceX.loadState(dbX)
+    menaceO.made_moves = {}
+    menaceX.made_moves = {}
+
     current_menace = menaceX
     other_menace = menaceO
 
     board = Board()
+
     while board.checkWin(other_menace.piece) == False and board.isTie() == False:
       current_menace.makeMove(board)
       other_menace, current_menace = current_menace, other_menace
@@ -54,10 +55,13 @@ while ties < 300:
       menaceX.learn("lose")
 
     #print("Game:", i)
-    menaceO.saveState(dbO)
-    menaceX.saveState(dbX)
 
-  print("Games Completed!")
-  print("X Wins:", x_wins)
-  print("O Wins:", o_wins)
-  print("Ties", ties)
+  if max_ties < ties:
+    max_ties = ties
+    print("Games Completed!")
+    print("X Wins:", x_wins)
+    print("O Wins:", o_wins)
+    print("Ties", ties)
+
+menaceO.saveState(dbO)
+menaceX.saveState(dbX)
