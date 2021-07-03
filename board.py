@@ -87,7 +87,7 @@ class Board:
       for col in row:
         if col == " ":
           return False
-    return True
+    return self.checkWin('X') == False and self.checkWin('O') == False
 
   def possibleMoves(self):
     moves = []

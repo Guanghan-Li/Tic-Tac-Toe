@@ -38,6 +38,21 @@ class Menace:
     
     moves = self.matchboxes[board.hash()]
     return moves
+  
+  def getRotations(self, board):
+    boardR1 = board.rotate()
+    boardR2 = boardR1.rotate()
+    boardR3 = boardR2.rotate()
+    boardF = board.flip()
+    boardFR1 = boardF.rotate()
+    boardFR2 = boardFR1.rotate()
+    boardFR3 = boardFR2.rotate()
+
+    return [board, boardR1, boardR2, boardR3, boardF, boardFR1, boardFR2, boardFR3]
+  
+  def translateMove(known_board, unknown_board):
+    pass
+
 
   def makeMove(self, board):
     moves = self.readBoard(board)
