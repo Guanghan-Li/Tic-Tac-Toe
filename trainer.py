@@ -24,6 +24,7 @@ current_menace = menaceX
 other_menace = menaceO
 ties = 0
 max_ties = 0
+games = 0
 while ties < 300:
   x_wins = 0
   o_wins = 0
@@ -54,6 +55,7 @@ while ties < 300:
       menaceO.learn('win')
       menaceX.learn("lose")
 
+  games += 300
     #print("Game:", i)
 
   if max_ties < ties:
@@ -62,6 +64,7 @@ while ties < 300:
     print("X Wins:", x_wins)
     print("O Wins:", o_wins)
     print("Ties", ties)
+    print('Games Played:', games)
 
 menaceO.saveState(dbO)
 menaceX.saveState(dbX)
