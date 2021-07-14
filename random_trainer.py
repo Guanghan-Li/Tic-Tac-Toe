@@ -16,7 +16,7 @@ menaceO.loadState(dbO)
 current_menace = RandomPlayer('X')
 other_menace = menaceO
 ties = 0
-while ties < 300:
+while ties < 250:
   x_wins = 0
   o_wins = 0
   ties = 0

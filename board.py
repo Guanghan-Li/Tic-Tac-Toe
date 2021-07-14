@@ -1,10 +1,14 @@
+import copy
+
 class Board:
-  def __init__(self):
+  def __init__(self, board=None):
     self.board = [
       [' ', ' ', ' '],
       [' ', ' ', ' '],
       [' ', ' ', ' ']
     ]
+    if board != None:
+      self.board = board
 
   def __str__(self):
     vline = u' \u2503 '
@@ -49,15 +53,11 @@ class Board:
   def addPiece(self, row, column, piece):
     self.board[row][column] = piece
   
-  def rotate(self, board):
-    columns = [[], [], []]
-
-    for row in board:
-      columns[0].append(row[0])
-      columns[1].append(row[1])
-      columns[2].append(row[2])
-    
-    return columns
+  def rotate(self):
+    board = copy.deepcopy(self.board)
+    board = list(zip(*board[::-1]))
+    board = [list(row) for row in board]
+    return Board(board)
   
   def rotateAmount(self, amount):
     board = self.board
@@ -67,21 +67,27 @@ class Board:
     
     return board
 
-  def flip(self, board):
+  def flip(self):
+    board = copy.deepcopy(self.board)
     board[0], board[2] = board[2], board[0]
-    return board
+    return Board(board)
 
   def hash(self):
     data = ''
     for row in self.board:
       data+=''.join(row)
     
-    data = data.replace(' ', '0')
-    data = data.replace('X', '1')
-    data = data.replace('O', '2')
+    output = ''
+    for char in data:
+      if char == 'X':
+        output += "1"
+      elif char == 'O':
+        output += '2'
+      else:
+        output += '0'
 
-    return int(data,3)
-  
+    return int(output,3)
+
   def isTie(self):
     for row in self.board:
       for col in row:
@@ -99,5 +105,14 @@ class Board:
     return moves
     
     return True and self.checkWin('X') == False and self.checkWin('O') == False
+  
+  def findAt(self):
+    for y in range(3):
+      for x in range(3):
+        if self.board[y][x] == '@':
+          return [x, y]
+
+  def __eq__(self, other_board):
+    return self.hash() == other_board.hash()
   
   

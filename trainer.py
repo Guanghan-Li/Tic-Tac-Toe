@@ -25,7 +25,8 @@ other_menace = menaceO
 ties = 0
 max_ties = 0
 games = 0
-while ties < 300:
+count = 0
+while ties < 250:
   x_wins = 0
   o_wins = 0
   ties = 0
