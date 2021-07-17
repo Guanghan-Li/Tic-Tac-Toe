@@ -26,7 +26,7 @@ ties = 0
 max_ties = 0
 games = 0
 count = 0
-while ties < 250:
+while ties < 280:
   x_wins = 0
   o_wins = 0
   ties = 0
