@@ -1,5 +1,6 @@
 from board import Board
 from menace import Menace
+from player import Player
 from db import Database
 import os
 
@@ -23,40 +24,48 @@ choice = ''
 while choice != 'X' and choice != 'O':
   choice = input('X or O? ')
   if choice == 'X':
-    player_piece = "X"
+    playerX = Player('X')
+    playerO = menaceO
     menace = menaceO
+    db = dbO
   
   elif choice == 'O':
-    player_piece = 'O'
+    playerO = Player('O')
+    playerX = menaceX
     menace = menaceX
+    db = dbX
   
   else:
     print("You have to enter 'X' or 'O'")
 
+
 board = Board()
 while board.checkWin("X") == False and board.checkWin('O') == False and board.isTie() == False:
-  print(board)
-  row = int(input("Choose a row 0-2: "))
-  column = int(input("Choose a column 0-2: "))
-  if board.board[row][column] == ' ':
-    board.addPiece(row, column, player_piece)
-    if board.checkWin(player_piece) == False and board.isTie() == False:
-      menace.makeMove(board)
-  else:
-    print("Cant place there!")
+  if board.checkWin("X") == False and board.checkWin('O') == False and board.isTie() == False:
+    if type(playerX) is Player:
+      print(board)
+    playerX.makeMove(board)
+
+  if board.checkWin("X") == False and board.checkWin('O') == False and board.isTie() == False:
+    if type(playerO) is Player:
+      print(board)
+    playerO.makeMove(board)
 
   print('')
 
 print(board)
 if board.isTie():
   print("Tie!")
-  menaceO.learn("tie")
+  playerO.learn("tie")
+  playerX.learn('tie')
 elif board.checkWin('X'):
   print("X won!")
-  menaceO.learn("lose")
+  playerO.learn("lose")
+  playerX.learn('win')
 elif board.checkWin('O'):
   print("O won!")
-  menaceO.learn('win')
+  playerX.learn('lose')
+  playerO.learn('win')
 
-menaceO.saveState(dbO)
+menace.saveState(db)
 
